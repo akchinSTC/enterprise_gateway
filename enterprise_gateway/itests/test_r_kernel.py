@@ -108,7 +108,7 @@ class TestRKernelLocal(unittest.TestCase, RKernelBaseTestCase):
         # shutdown environment
         cls.gatewayClient.shutdown_kernel(cls.kernel)
 
-
+@unittest.skip
 class TestRKernelClient(unittest.TestCase, RKernelBaseYarnTestCase):
     KERNELSPEC = os.getenv("R_KERNEL_CLIENT_NAME", "spark_R_yarn_client")
 
