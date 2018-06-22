@@ -25,7 +25,6 @@ install:
 
 script:
     - jupyter enterprisegateway --help
-    - nosetests -x --process-restartworker --with-coverage --cover-package=enterprise_gateway enterprise_gateway.tests
     - make itest
     - pip uninstall -y jupyter_enterprise_gateway
 

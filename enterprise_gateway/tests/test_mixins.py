@@ -124,10 +124,10 @@ class TestTokenAuthMixin(unittest.TestCase):
 
 class TestableJSONErrorsHandler(JSONErrorsMixin):
     """Implementation that uses the JSONErrorsMixin for testing."""
-    def __init__(self):
-        self.headers = {}
-        self.response = None
-        self.status_code = None
+
+    headers = {}
+    response = None
+    status_code = None
 
     def finish(self, response):
         self.response = response

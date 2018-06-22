@@ -3,13 +3,14 @@ import urllib
 import nbformat
 import re
 from enterprise_gateway.client.gateway_client import GatewayClient
-
+import os
 
 @pytest.fixture(scope='class')
 def read_in_notebook():
 
     #TODO  - change to explicit directory instead of single notebook file
-    url = 'sample_notebook.ipynb'
+    url = 'file://'+os.getcwd()+'/enterprise_gateway/itests/notebooks/.ipynb_checkpoints/sample_notebook.ipynb'
+
     try:
         # Python 3
         response = urllib.request.urlopen(url).read().decode()
@@ -25,8 +26,8 @@ def read_in_notebook():
 @pytest.fixture(scope='class')
 def get_param_list():
     param_list = []
+    testname_list = []
     for i in read_in_notebook()['cells']:
-        print i
         if not i['source'] or not i['metadata']['regex']:
             print("Notebook file has empty source or output fields")
         elif i['metadata']['regex']:
@@ -36,8 +37,9 @@ def get_param_list():
                 param_list.append((i['metadata']['name'], i['source'], i['outputs'][0]['text']))
             else:
                 param_list.append((i['metadata']['name'], i['source'], i['outputs'][0]['data']['text/plain']))
+        testname_list.append(i['metadata']['name'])
 
-    return param_list
+    return {"cell list": param_list, "testnames": testname_list}
 
 
 @pytest.fixture(scope='class')
@@ -54,7 +56,9 @@ def setup_kernel(request):
 
 @pytest.mark.usefixtures('setup_kernel')
 class TestNoteBook():
-    @pytest.mark.parametrize('testname, question, answer', get_param_list())
+    parameters = get_param_list()
+
+    @pytest.mark.parametrize('testname, question, answer', parameters['cell list'], ids=parameters['testnames'])
     def test_cell(self, testname, question, answer):
         result = self.active_kernel.execute(question)
         assert re.search(answer, result)

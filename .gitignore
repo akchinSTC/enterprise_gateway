@@ -58,7 +58,7 @@ docs/_build/
 target/
 
 .DS_Store
-.ipynb_checkpoints/
+
 
 # PyCharm
 .idea/
