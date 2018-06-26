@@ -109,7 +109,7 @@ class TestScalaKernelLocal(unittest.TestCase, ScalaKernelBaseTestCase):
         cls.gatewayClient.shutdown_kernel(cls.kernel)
 
 
-@unittest.skip
+
 class TestScalaKernelClient(unittest.TestCase, ScalaKernelBaseYarnTestCase):
     KERNELSPEC = os.getenv("SCALA_KERNEL_CLIENT_NAME", "spark_scala_yarn_client")
 
@@ -130,7 +130,7 @@ class TestScalaKernelClient(unittest.TestCase, ScalaKernelBaseYarnTestCase):
         # shutdown environment
         cls.gatewayClient.shutdown_kernel(cls.kernel)
 
-@unittest.skip
+
 class TestScalaKernelCluster(unittest.TestCase, ScalaKernelBaseYarnTestCase):
     KERNELSPEC = os.getenv("SCALA_KERNEL_CLUSTER_NAME", "spark_scala_yarn_cluster")
 

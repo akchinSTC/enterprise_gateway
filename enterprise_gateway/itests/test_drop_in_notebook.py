@@ -32,12 +32,13 @@ def get_param_list():
             print("Notebook file has empty source or output fields")
         elif i['metadata']['regex']:
             param_list.append((i['metadata']['name'], i['source'], i['metadata']['regex']))
+            testname_list.append(i['metadata']['name'])
         else:
             if 'text' in i['outputs'][0]:
                 param_list.append((i['metadata']['name'], i['source'], i['outputs'][0]['text']))
             else:
                 param_list.append((i['metadata']['name'], i['source'], i['outputs'][0]['data']['text/plain']))
-        testname_list.append(i['metadata']['name'])
+            testname_list.append(i['metadata']['name'])
 
     return {"cell list": param_list, "testnames": testname_list}
 
