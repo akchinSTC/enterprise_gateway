@@ -89,7 +89,7 @@ class ScalaKernelBaseYarnTestCase(ScalaKernelBaseTestCase):
 
 
 class TestScalaKernelLocal(unittest.TestCase, ScalaKernelBaseTestCase):
-    KERNELSPEC = os.getenv("SCALA_KERNEL_LOCAL_NAME", "spark_2.1_scala")
+    KERNELSPEC = os.getenv("SCALA_KERNEL_LOCAL_NAME", "spark_2.3_scala")
 
     @classmethod
     def setUpClass(cls):
