@@ -1,4 +1,4 @@
-FROM elyra/yarn-spark:2.3.1
+FROM akchin/yarn-spark:2.3.1
 
 # Install Enterprise Gateway wheel and kernelspecs
 COPY jupyter_enterprise_gateway*.whl /tmp

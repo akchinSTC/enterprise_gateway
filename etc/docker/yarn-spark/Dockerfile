@@ -1,5 +1,5 @@
 # Use docker image with Spark 2.1 and Hadoop 2.7 (sequenceiq/hadoop-docker:2.7.1)
-FROM akchinstc/spark:2.3.1
+FROM akchin/spark:2.3.1
 
 ENV ANACONDA_HOME=/opt/anaconda2
 ENV PATH=$ANACONDA_HOME/bin:$PATH
