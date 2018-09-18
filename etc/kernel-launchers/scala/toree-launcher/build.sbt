@@ -9,9 +9,9 @@ version := sys.props.getOrElse("version", default = "1.0").replaceAll("dev[0-9]"
 
 scalaVersion := "2.11.12"
 
+resolvers += "Maven Repository" at "http://repo1.maven.org"
 resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 resolvers += "Sonatype Repository" at "http://oss.sonatype.org/content/repositories/releases"
-resolvers += "Maven Repository" at "http://repo1.maven.org"
 
 val sparkVersion = "2.1.1"
 
