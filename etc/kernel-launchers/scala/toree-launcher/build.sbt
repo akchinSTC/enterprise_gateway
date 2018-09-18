@@ -11,6 +11,7 @@ scalaVersion := "2.11.12"
 
 resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 resolvers += "Sonatype Repository" at "http://oss.sonatype.org/content/repositories/releases"
+resolvers += "Maven Repository" at "http://repo1.maven.org"
 
 val sparkVersion = "2.1.1"
 
