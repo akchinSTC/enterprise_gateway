@@ -9,8 +9,16 @@ python:
 services:
     - docker
 
+before_cache:
+  # Save tagged docker images
+  - >
+    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+
 cache:
+    bundler: true
     directories:
+     - $HOME/docker
      - /home/travis/.sbt/
 
 env:
@@ -18,6 +26,7 @@ env:
     - ASYNC_TEST_TIMEOUT=30
 
 before_install:
+    - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
     - mkdir -p $HOME/.sbt/launchers/1.2.1
     - curl -L -o $HOME/.sbt/launchers/1.2.1/sbt-launch.jar http://central.maven.org/maven2/org/scala-sbt/sbt-launch/1.2.1/sbt-launch-1.2.1.jar
 
