@@ -1,7 +1,7 @@
 ARG HUB_ORG
 ARG VERSION
 
-FROM $HUB_ORG/yarn-spark:$VERSION
+FROM akchin/yarn-spark:2.0.0.dev0
 
 # Install Enterprise Gateway wheel and kernelspecs
 COPY jupyter_enterprise_gateway*.whl /tmp

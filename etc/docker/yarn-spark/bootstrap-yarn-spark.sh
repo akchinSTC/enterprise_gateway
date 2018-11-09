@@ -45,10 +45,8 @@ echo "spark.driver.extraJavaOptions -Dderby.system.home=/tmp" >>  $SPARK_HOME/co
 
 cp $SPARK_HOME/conf/metrics.properties.template $SPARK_HOME/conf/metrics.properties
 
-service rsyslog start
-service rsyslog status
-service sshd restart
-service sshd status
+#/usr/sbin/rsyslog
+pkill sshd && /usr/sbin/sshd
 
 sudo -u elyra ssh $(hostname -i) "whoami"
 
@@ -61,6 +59,7 @@ then
 
     ## Add HDFS folders for our users (elyra, bob, alice)...
     echo "Waiting for Namenode to exit safemode..."
+    echo "$HADOOP_PREFIX"
     hdfs dfsadmin -safemode wait
     echo "Setting up HDFS folders for Enterprise Gateway users..."
     hdfs dfs -mkdir -p /user/{elyra,bob,alice} /tmp/hive
@@ -76,20 +75,20 @@ fi
 
 if [[ "$CMD" == "--yarn" ]];
 then
-    echo "YARN application logs can be found at '/usr/local/hadoop-2.7.1/logs/userlogs'"
+    echo "YARN application logs can be found at '/usr/local/hadoop/logs/userlogs'"
     prev_count=0
     while [ 1 ]
     do
         # Every minute list any new application directories that have been created since
         # last time.
         sleep 60
-        if ls -ld /usr/local/hadoop-2.7.1/logs/userlogs/application* > /dev/null 2>&1;
+        if ls -ld /usr/local/hadoop/logs/userlogs/application* > /dev/null 2>&1;
         then
-            count=`ls -ld /usr/local/hadoop-2.7.1/logs/userlogs/application*|wc -l`
+            count=`ls -ld /usr/local/hadoop/logs/userlogs/application*|wc -l`
             if [[ $count > $prev_count ]];
             then
                 new_apps=`expr $count - $prev_count`
-                ls -ldt /usr/local/hadoop-2.7.1/logs/userlogs/application*|head --lines=$new_apps
+                ls -ldt /usr/local/hadoop/logs/userlogs/application*|head --lines=$new_apps
             fi
             # reset each time in case count < prev_count
             prev_count=$count
@@ -98,7 +97,7 @@ then
 elif [[ "$FROM" == "YARN" ]];
 then
     echo ""
-    echo "Note:  YARN application logs can be found at '/usr/local/hadoop-2.7.1/logs/userlogs'"
+    echo "Note:  YARN application logs can be found at '/usr/local/hadoop/logs/userlogs'"
     "$*"
 fi
 

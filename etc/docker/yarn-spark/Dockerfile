@@ -1,11 +1,11 @@
 # Use docker image with Spark 2.3.1 and Hadoop 2.7 (sequenceiq/hadoop-docker:2.7.1)
-FROM akchin/spark:2.3.1
+FROM akchin/demo-base:2.0.0.dev0
 
-ENV ANACONDA_HOME=/opt/anaconda2
-ENV PATH=$ANACONDA_HOME/bin:$PATH
+ENV ANACONDA_HOME=/opt/anaconda2/
+ENV PATH=$ANACONDA_HOME/bin:$HADOOP_PREFIX/bin:$PATH
 ENV PYSPARK_PYTHON=$ANACONDA_HOME/bin/python
 
-RUN yum install -y gcc krb5-devel; yum clean all
+RUN yum install -y gcc krb5-devel ; yum clean all
 
 COPY yarn-site.xml.template /usr/local/hadoop/etc/hadoop/
 
@@ -15,19 +15,6 @@ RUN cd /tmp && \
 	rpm -i /tmp/rsyslog-5.8.10-10.el6_6.src.rpm && \
 	rm -f /tmp/rsyslog-5.8.10-10.el6_6.src.rpm
 
-# Update Java
-RUN cd /tmp && \
-	curl -LO 'http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.rpm' -H 'Cookie: oraclelicense=accept-securebackup-cookie' && \
-	rpm -e jdk-1.7.0_71-fcs.x86_64 && \
-	rpm -i /tmp/jdk-8u191-linux-x64.rpm && \
-	rm -f /tmp/jdk-8u191-linux-x64.rpm
-
-# Install Anaconda
-RUN cd /tmp && \
-	curl -O https://repo.continuum.io/archive/Anaconda2-4.4.0-Linux-x86_64.sh && \
-    bash /tmp/Anaconda2-4.4.0-Linux-x86_64.sh -b -p $ANACONDA_HOME && \
-    rm -f /tmp/Anaconda2-4.4.0-Linux-x86_64.sh
-
 # Install Toree
 RUN cd /tmp && \
 	curl -O https://dist.apache.org/repos/dist/release/incubator/toree/0.2.0-incubating/toree-pip/toree-0.2.0.tar.gz && \
@@ -36,9 +23,11 @@ RUN cd /tmp && \
 	jupyter toree install --spark_home=/usr/local/spark --kernel_name="Spark 2.3.1" --interpreters=Scala && \
 	rm -f /tmp/toree-0.2.0.tar.gz
 
-# Install Anaconda R binaries, argparser and kernelspecs dir
-RUN conda install --yes --quiet -c r r-essentials r-irkernel && \
-	Rscript -e 'install.packages("argparser", repos="https://cran.rstudio.com")' 
+# Install Anaconda R binaries, argparser
+RUN conda install --yes --quiet r-irkernel r-devtools && \
+	Rscript -e 'install.packages("argparser", repos="https://cran.rstudio.com")' && \
+	Rscript -e 'devtools::install_github("apache/spark@v2.3.1", subdir="R/pkg")'
+
 
 # Create service user 'elyra'. Pin uid/gid to 1111.
 # Grant sudo privs to elyra. Unlock passwd (for ssh).
@@ -72,10 +61,10 @@ RUN chown root.root /etc/bootstrap-yarn-spark.sh && \
 
 WORKDIR /usr/local/hadoop
 
-ENTRYPOINT ["/etc/bootstrap-yarn-spark.sh"]
-CMD ["--help"]
+#ENTRYPOINT ["/etc/bootstrap-yarn-spark.sh"]
+#CMD ["--help"]
 
-LABEL Hadoop.version="2.7.1"
+LABEL Hadoop.version="2.7.7"
 LABEL Spark.version="2.3.1"
 LABEL Anaconda.version="4.4.0"
 LABEL Anaconda.python.version="2.7.13"
