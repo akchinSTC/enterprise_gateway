@@ -10,7 +10,7 @@ ENV:=enterprise-gateway-dev
 SHELL:=/bin/bash
 
 # Docker attributes - hub organization and tag.  Modify accordingly
-HUB_ORG:=elyra
+HUB_ORG:=akchin
 TAG?=$(VERSION)
 
 NO_CACHE?=--no-cache

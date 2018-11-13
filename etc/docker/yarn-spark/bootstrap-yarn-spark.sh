@@ -34,22 +34,24 @@ rm /tmp/*.pid
 # installing libraries if any - (resource urls added comma separated to the ACP system variable)
 cd $HADOOP_PREFIX/share/hadoop/common ; for cp in ${ACP//,/ }; do  echo == $cp; curl -LO $cp ; done; cd -
 
-# altering the hostname in core-site and enterprise-gateway startup configuration
+## altering the hostname in core-site and enterprise-gateway startup configuration
 sed s/HOSTNAME/$YARN_HOST/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
 sed s/HOSTNAME/$YARN_HOST/ /usr/local/hadoop/etc/hadoop/yarn-site.xml.template > /usr/local/hadoop/etc/hadoop/yarn-site.xml
-
+#
 # setting spark defaults
 cp $SPARK_HOME/conf/spark-defaults.conf.template  $SPARK_HOME/conf/spark-defaults.conf
+# set spark.yarn.jars so spark will stop uploaded jars to hdfs everytime
+
 # place metastore db and derby.log in /tmp
 echo "spark.driver.extraJavaOptions -Dderby.system.home=/tmp" >>  $SPARK_HOME/conf/spark-defaults.conf
 
 cp $SPARK_HOME/conf/metrics.properties.template $SPARK_HOME/conf/metrics.properties
 
-#/usr/sbin/rsyslog
-pkill sshd && /usr/sbin/sshd
-
-sudo -u elyra ssh $(hostname -i) "whoami"
-
+##/usr/sbin/rsyslog
+/usr/sbin/sshd
+#echo "I am here now"
+sudo -u jovyan ssh $(hostname -i) "whoami"
+#
 # If we're not running in standalone mode, don't run as elyra.
 # If we're running in standalone mode, startup yarn, hdfs, etc.
 if [[ "$YARN_HOST" == "$HOSTNAME" || "$FROM" == "YARN" ]];
@@ -59,11 +61,10 @@ then
 
     ## Add HDFS folders for our users (elyra, bob, alice)...
     echo "Waiting for Namenode to exit safemode..."
-    echo "$HADOOP_PREFIX"
     hdfs dfsadmin -safemode wait
     echo "Setting up HDFS folders for Enterprise Gateway users..."
-    hdfs dfs -mkdir -p /user/{elyra,bob,alice} /tmp/hive
-    hdfs dfs -chown elyra:elyra /user/elyra
+    hdfs dfs -mkdir -p /user/{jovyan,bob,alice} /tmp/hive
+    hdfs dfs -chown jovyan:jovyan /user/jovyan
     hdfs dfs -chown bob:bob /user/bob
     hdfs dfs -chown alice:alice /user/alice
     hdfs dfs -chmod 0777 /tmp/hive

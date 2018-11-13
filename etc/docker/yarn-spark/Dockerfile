@@ -2,12 +2,12 @@
 FROM akchin/demo-base:2.0.0.dev0
 
 ENV ANACONDA_HOME=/opt/anaconda2/
-ENV PATH=$ANACONDA_HOME/bin:$HADOOP_PREFIX/bin:$PATH
+ENV PATH=$ANACONDA_HOME/bin:$HADOOP_PREFIX/bin:$SPARK_HOME/bin:$PATH
 ENV PYSPARK_PYTHON=$ANACONDA_HOME/bin/python
 
 RUN yum install -y gcc krb5-devel ; yum clean all
 
-COPY yarn-site.xml.template /usr/local/hadoop/etc/hadoop/
+ADD yarn-site.xml.template /usr/local/hadoop/etc/hadoop/
 
 # Install system logging and insert into bootstrap.sh - helps in troubleshooting ssh
 RUN cd /tmp && \
@@ -33,26 +33,26 @@ RUN conda install --yes --quiet r-irkernel r-devtools && \
 # Grant sudo privs to elyra. Unlock passwd (for ssh).
 # Add users 'bob' and 'alice' for test/demo purposes.
 # Add user 'jovyan' for compatibility with other Jupyter images.
-RUN adduser elyra -u 1111 -G users && \
-	echo "elyra ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/elyra && \
-	chmod 0440 /etc/sudoers.d/elyra && \
-	passwd -fu elyra && \
+RUN adduser jovyan -u 1000 -G users && \
+	echo "jovyan ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/jovyan && \
+	chmod 0440 /etc/sudoers.d/jovyan && \
+	passwd -fu jovyan && \
 	adduser bob -u 1112 -G users && \
 	adduser alice -u 1113 -G users && \
-	adduser jovyan -u 1000 -G users
+	adduser elyra -u 1111 -G users
 
-USER elyra
+USER jovyan
 
 # passwordless ssh
-RUN ssh-keygen -q -N "" -t rsa -f /home/elyra/.ssh/id_rsa && \
-	cp /home/elyra/.ssh/id_rsa.pub /home/elyra/.ssh/authorized_keys && \
-	chmod 0700 /home/elyra
+RUN ssh-keygen -q -N "" -t rsa -f /home/jovyan/.ssh/id_rsa && \
+	cp /home/jovyan/.ssh/id_rsa.pub /home/jovyan/.ssh/authorized_keys && \
+	chmod 0700 /home/jovyan
 
 USER root
 
-ADD ssh_config /home/elyra/.ssh/config
-RUN chmod 600 /home/elyra/.ssh/config && \
-    chown elyra:elyra /home/elyra/.ssh/config
+ADD ssh_config /home/jovyan/.ssh/config
+RUN chmod 600 /home/jovyan/.ssh/config && \
+    chown jovyan: /home/jovyan/.ssh/config
 
 # install boot script
 COPY bootstrap-yarn-spark.sh /etc/bootstrap-yarn-spark.sh
@@ -61,8 +61,8 @@ RUN chown root.root /etc/bootstrap-yarn-spark.sh && \
 
 WORKDIR /usr/local/hadoop
 
-#ENTRYPOINT ["/etc/bootstrap-yarn-spark.sh"]
-#CMD ["--help"]
+#ENTRYPOINT ["/etc/bootstrap.sh"]
+ENTRYPOINT ["/etc/bootstrap-yarn-spark.sh"]
 
 LABEL Hadoop.version="2.7.7"
 LABEL Spark.version="2.3.1"

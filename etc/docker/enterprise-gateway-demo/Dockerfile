@@ -37,4 +37,4 @@ WORKDIR /usr/local/share/jupyter
 ENTRYPOINT ["/etc/bootstrap-enterprise-gateway.sh"]
 CMD ["--help"]
 
-EXPOSE 8888
+EXPOSE 8888 9000

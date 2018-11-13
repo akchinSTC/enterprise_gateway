@@ -31,9 +31,9 @@ export FROM="EG"
 sed s/HOSTNAME/$YARN_HOST/ /usr/local/share/jupyter/start-enterprise-gateway.sh.template > /usr/local/share/jupyter/start-enterprise-gateway.sh
 chmod 0755 /usr/local/share/jupyter/start-enterprise-gateway.sh
 
-if [[ "$CMD" == "--elyra" ]];
+if [[ "$CMD" == "--jovyan" ]];
 then
-    sudo -u elyra /usr/local/share/jupyter/start-enterprise-gateway.sh
+    sudo -u jovyan /usr/local/share/jupyter/start-enterprise-gateway.sh
 else
     echo ""
     echo "Note: Enterprise Gateway can be manually started using 'sudo -u elyra /usr/local/share/jupyter/start-enterprise-gateway.sh'..."
