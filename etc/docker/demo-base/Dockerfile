@@ -51,11 +51,20 @@ RUN . $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 RUN mkdir $HADOOP_PREFIX/input
 RUN cp $HADOOP_PREFIX/etc/hadoop/*.xml $HADOOP_PREFIX/input
 
+# Install Spark
+ENV SPARK_VER 2.3.1
+ENV SPARK_HOME /usr/local/spark
+RUN curl -s http://apache.cs.utah.edu/spark/spark-${SPARK_VER}/spark-${SPARK_VER}-bin-hadoop2.7.tgz | tar -xz -C /usr/local/ && \
+    cd /usr/local && \
+    ln -s spark-${SPARK_VER}-bin-hadoop2.7 spark && \
+    mkdir $SPARK_HOME/yarn-remote-client
+ADD yarn-remote-client $SPARK_HOME/yarn-remote-client
+
 # pseudo distributed
 ADD core-site.xml.template $HADOOP_PREFIX/etc/hadoop/core-site.xml.template
 RUN sed s/HOSTNAME/localhost/ /usr/local/hadoop/etc/hadoop/core-site.xml.template > /usr/local/hadoop/etc/hadoop/core-site.xml
-ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
 
+ADD hdfs-site.xml $HADOOP_PREFIX/etc/hadoop/hdfs-site.xml
 ADD mapred-site.xml $HADOOP_PREFIX/etc/hadoop/mapred-site.xml
 ADD yarn-site.xml $HADOOP_PREFIX/etc/hadoop/yarn-site.xml
 
