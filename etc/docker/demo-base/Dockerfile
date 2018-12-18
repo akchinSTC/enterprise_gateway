@@ -37,10 +37,8 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86
     ln -s /opt/anaconda2/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
     echo ". /opt/anaconda2/etc/profile.d/conda.sh" >> ~/.bashrc && \
     echo "conda activate base" >> ~/.bashrc
-RUN conda install -v --yes --quiet pip jupyter r-devtools r-stringr
-RUN Rscript -e 'install.packages("argparser", repos="http://cran.cnr.berkeley.edu")' \
-	        -e 'install.packages("IRkernel", repos="http://cran.cnr.berkeley.edu", lib="/opt/anaconda2/lib/R/library")' \
-	        -e 'IRkernel::installspec(prefix = "/usr/local")' \
+RUN conda install -v --yes --quiet pip jupyter r-devtools r-stringr r-argparse r-IRkernel
+RUN Rscript -e 'IRkernel::installspec(prefix = "/usr/local")' \
             -e 'devtools::install_github("apache/spark@v$SPARK_VER", subdir="R/pkg")'
 
 # SETUP HADOOP CONFIGS
