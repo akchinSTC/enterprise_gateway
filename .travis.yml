@@ -16,6 +16,7 @@ cache:
 env:
   global:
     - ASYNC_TEST_TIMEOUT=30
+    - PATH=$PATH:/snap/bin
 
 before_install:
     - mkdir -p $HOME/.sbt/launchers/1.2.1
@@ -29,6 +30,7 @@ install:
     - pip freeze
     - sudo apt install --yes snapd
     - sudo snap install microk8s --classic
+    - sudo microk8s.start
     - microk8s.kubectl get all --all-namespaces
 
 script:
