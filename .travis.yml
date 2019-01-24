@@ -2,8 +2,6 @@ sudo: required
 language: python
 
 python:
-    - 2.7
-    - 3.4
     - 3.6
 
 services:
@@ -28,10 +26,11 @@ install:
     - make dist enterprise-gateway-demo
     - pip install dist/*.whl coverage
     - pip freeze
-    - sudo apt install --yes snapd
-    - sudo snap install microk8s --classic
-    - sudo microk8s.start
-    - microk8s.kubectl get all --all-namespaces
+    - curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+    - mkdir -p .bin; mv ./kubectl .bin/kubectl && chmod +x .bin/kubectl
+    - export PATH="$TRAVIS_BUILD_DIR/.bin:$PATH"
+    - wget https://cdn.rawgit.com/Mirantis/kubeadm-dind-cluster/master/fixed/dind-cluster-v1.7.sh && chmod +x dind-cluster-v1.7.sh && ./dind-cluster-v1.7.sh up
+    - export PATH="$HOME/.kubeadm-dind-cluster:$PATH"
 
 script:
     - jupyter enterprisegateway --help
