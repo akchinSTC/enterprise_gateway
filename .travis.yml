@@ -29,6 +29,7 @@ install:
     - pip freeze
     - sudo apt install --yes snapd
     - sudo snap install microk8s --classic
+    - microk8s.kubectl get all --all-namespaces
 
 script:
     - jupyter enterprisegateway --help
