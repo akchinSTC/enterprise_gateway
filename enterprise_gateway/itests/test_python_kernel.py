@@ -193,5 +193,26 @@ class TestPythonKernelCluster(unittest.TestCase, PythonKernelBaseYarnTestCase):
         cls.gatewayClient.shutdown_kernel(cls.kernel)
 
 
+class TestPythonKernelKubernetes(unittest.TestCase, PythonKernelBaseTestCase):
+    KERNELSPEC = os.getenv("PYTHON_KERNEL_CLUSTER_NAME", "spark_python_kubernetes")
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestPythonKernelCluster, cls).setUpClass()
+        print('>>>')
+        print('Starting Python kernel using {} kernelspec'.format(cls.KERNELSPEC))
+
+        # initialize environment
+        cls.gatewayClient = GatewayClient()
+        cls.kernel = cls.gatewayClient.start_kernel(cls.KERNELSPEC)
+
+    @classmethod
+    def tearDownClass(cls):
+        super(TestPythonKernelCluster, cls).tearDownClass()
+        print('Shutting down Python kernel using {} kernelspec'.format(cls.KERNELSPEC))
+        # shutdown environment
+        cls.gatewayClient.shutdown_kernel(cls.kernel)
+
+
 if __name__ == '__main__':
     unittest.main()
