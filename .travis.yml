@@ -36,7 +36,7 @@ install:
     - sudo kubectl cluster-info
 
 script:
-    - sudo kubectl apply -f etc/kubernetes/enterprise-gateway.yaml
+    - sudo kubectl apply -f etc/kubernetes/enterprise-gateway.yaml && sleep 15
     - sudo kubectl get all -l app=enterprise-gateway --all-namespaces
 
 after_success:
