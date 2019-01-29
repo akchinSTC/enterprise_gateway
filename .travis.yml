@@ -23,7 +23,7 @@ before_install:
 
 install:
     - pip install --upgrade setuptools pip websocket-client
-    - make dist enterprise-gateway-demo
+    - make dist
     - pip install dist/*.whl coverage
     - pip freeze
     - echo "Starting local kubernetes cluster (minikube)"
