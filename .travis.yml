@@ -38,6 +38,7 @@ install:
 script:
     - sudo kubectl apply -f etc/kubernetes/enterprise-gateway.yaml && sleep 15
     - sudo kubectl get all -l app=enterprise-gateway --all-namespaces
+    - nosetests -v enterprise_gateway.itests.test_python_kernel.TestPythonKernelKubernetes
 
 after_success:
   - echo "Travis exited with ${TRAVIS_TEST_RESULT}"
