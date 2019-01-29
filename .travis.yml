@@ -37,7 +37,7 @@ install:
 
 script:
     - sudo kubectl apply -f etc/kubernetes/enterprise-gateway.yaml
-    - sudo kubectl get all -l app=enterprise-gateway
+    - sudo kubectl get all -l app=enterprise-gateway --all-namespaces
 
 after_success:
   - echo "Travis exited with ${TRAVIS_TEST_RESULT}"
