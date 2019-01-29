@@ -36,10 +36,8 @@ install:
     - sudo kubectl cluster-info
 
 script:
-    - jupyter enterprisegateway --help
-    - nosetests -x --process-restartworker --with-coverage --cover-package=enterprise_gateway enterprise_gateway.tests
-    - make itest-yarn
-    - pip uninstall -y jupyter_enterprise_gateway
+    - sudo kubectl apply -f etc/kubernetes/enterprise-gateway.yaml
+    - sudo kubectl get all -l app=enterprise-gateway
 
 after_success:
   - echo "Travis exited with ${TRAVIS_TEST_RESULT}"
