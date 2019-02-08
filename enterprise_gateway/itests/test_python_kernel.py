@@ -107,7 +107,7 @@ class PythonKernelBaseYarnTestCase(PythonKernelBaseTestCase):
         self.assertRegexpMatches(result, 'Pi is roughly 3.14*')
 
 class TestPythonKernelLocal(unittest.TestCase, PythonKernelBaseTestCase):
-    KERNELSPEC = os.getenv("PYTHON_KERNEL_LOCAL_NAME", "python2")
+    KERNELSPEC = os.getenv("PYTHON_KERNEL_LOCAL_NAME", "python3")
 
     @classmethod
     def setUpClass(cls):
