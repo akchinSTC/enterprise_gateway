@@ -26,7 +26,6 @@ before_install:
     - curl -s -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.1/minikube-linux-amd64
 
 install:
-    - apt-get install sbt
     - /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR
     - conda install --upgrade setuptools pip websocket-client
     - echo "Starting local kubernetes cluster (minikube)"
