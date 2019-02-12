@@ -27,7 +27,7 @@ before_install:
 
 install:
     - /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR
-    - conda install websocket-client
+    - conda install -y websocket-client
     - echo "Starting local kubernetes cluster (minikube)"
     - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
     - chmod +x minikube && sudo mv minikube /usr/local/bin/
