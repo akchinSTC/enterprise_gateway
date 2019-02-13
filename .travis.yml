@@ -34,7 +34,7 @@ install:
     - make dist enterprise-gateway kernel-images
 
 script:
-    - minikube start --vm-driver=none
+    - sudo minikube start --vm-driver=none
     - kubectl create -f etc/kubernetes/enterprise-gateway.yaml
 
 after_success:
