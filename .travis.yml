@@ -35,6 +35,7 @@ install:
 
 script:
     - sudo minikube start --vm-driver=none
+    - sleep 30
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
 
 after_success:
