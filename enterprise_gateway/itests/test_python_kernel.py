@@ -65,6 +65,28 @@ class PythonKernelBaseTestCase(object):
         self.assertEquals(interrupted_value, 124)
 
 
+class TestPythonKernelKubernetes(unittest.TestCase, PythonKernelBaseTestCase):
+    KERNELSPEC = os.getenv("PYTHON_KERNEL_KUBERNETES_NAME", "python_kubernetes")
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestPythonKernelKubernetes, cls).setUpClass()
+        print('>>>')
+        print('Starting Python kernel using {} kernelspec'.format(cls.KERNELSPEC))
+
+        # initialize environment
+        cls.gatewayClient = GatewayClient()
+        cls.kernel = cls.gatewayClient.start_kernel(cls.KERNELSPEC)
+
+    @classmethod
+    def tearDownClass(cls):
+        super(TestPythonKernelKubernetes, cls).tearDownClass()
+        print('Shutting down Python kernel using {} kernelspec'.format(cls.KERNELSPEC))
+
+        # shutdown environment
+        cls.gatewayClient.shutdown_kernel(cls.kernel)
+
+
 class PythonKernelBaseYarnTestCase(PythonKernelBaseTestCase):
     """
     Python related tests cases common to Spark on Yarn
