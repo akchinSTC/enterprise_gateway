@@ -37,7 +37,7 @@ script:
     - sudo minikube start --vm-driver=none
     - sleep 30
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
-    - make itest-k8s
+    - make itest-kubernetes
 
 after_success:
   - echo "Travis exited with ${TRAVIS_TEST_RESULT}"
