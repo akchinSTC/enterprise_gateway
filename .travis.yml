@@ -16,7 +16,7 @@ env:
     - ASYNC_TEST_TIMEOUT=30
     - MINICONDA_VERSION=4.5.11
     - CONDA_DIR=/opt/conda
-    - PATH=$PATH:$CONDA_DIR/bin
+    - PATH=$CONDA_DIR/bin:$PATH
 
 before_install:
     - mkdir -p $HOME/.sbt/launchers/1.2.1
@@ -40,6 +40,7 @@ script:
     - make env
     - source activate enterprise-gateway-dev
     - pip list
+    - which pip
     - make itest-kubernetes
 
 after_success:
