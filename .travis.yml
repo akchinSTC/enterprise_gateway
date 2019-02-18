@@ -38,6 +38,7 @@ script:
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
     - make env
     - source activate enterprise-gateway-dev
+    - find ~/ -name site-packages
     - ls -la /opt/conda/lib
     - /opt/conda/bin/nosetests -v enterprise_gateway.itests.test_python_kernel.TestPythonKernelKubernetes
     - make itest-kubernetes
