@@ -31,7 +31,6 @@ install:
     - echo "Starting local kubernetes cluster (minikube)"
     - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
     - chmod +x minikube && sudo mv minikube /usr/local/bin/
-    - make dist enterprise-gateway kernel-py kernel-spark-py
 
 script:
     - sudo minikube start --vm-driver=none
@@ -39,6 +38,7 @@ script:
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
     - make env
     - source activate enterprise-gateway-dev
+    - ls -la /opt/conda/lib/site-packages
     - /opt/conda/bin/nosetests -v enterprise_gateway.itests.test_python_kernel.TestPythonKernelKubernetes
     - make itest-kubernetes
 
