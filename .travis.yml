@@ -37,6 +37,8 @@ install:
 script:
     - sudo minikube start --vm-driver=none
     - sleep 30
+    - hostname
+    - ifconfig
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
     - sleep 30
     - make itest-kubernetes
