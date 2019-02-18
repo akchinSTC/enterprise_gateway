@@ -28,6 +28,7 @@ before_install:
 install:
     - /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR
     - conda install -y websocket-client nose
+    - pip install -r requirements.txt
     - echo "Starting local kubernetes cluster (minikube)"
     - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
     - chmod +x minikube && sudo mv minikube /usr/local/bin/
@@ -36,11 +37,6 @@ script:
     - sudo minikube start --vm-driver=none
     - sleep 30
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
-    - make env
-    - source activate enterprise-gateway-dev
-    - find ~/ -name site-packages
-    - ls -la /opt/conda/lib
-    - /opt/conda/bin/nosetests -v enterprise_gateway.itests.test_python_kernel.TestPythonKernelKubernetes
     - make itest-kubernetes
 
 after_success:
