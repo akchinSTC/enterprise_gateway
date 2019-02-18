@@ -27,7 +27,7 @@ before_install:
 
 install:
     - /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR
-    - conda install -y websocket-client
+    - conda install -y websocket-client nosetests
     - echo "Starting local kubernetes cluster (minikube)"
     - chmod +x kubectl && sudo mv kubectl /usr/local/bin/
     - chmod +x minikube && sudo mv minikube /usr/local/bin/
@@ -41,6 +41,8 @@ script:
     - source activate enterprise-gateway-dev
     - pip list
     - which pip
+    - which nosetests
+    - find / -name nosetests
     - make itest-kubernetes
 
 after_success:
