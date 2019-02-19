@@ -39,6 +39,9 @@ script:
     - sleep 30
     - hostname
     - ifconfig
+    - env
+#    - sed -i 's/#  externalIPs:/  externalIPs:/g' etc/kubernetes/enterprise-gateway.yaml
+#    - sed -i 's/#  externalIPs:/  externalIPs:/g' etc/kubernetes/enterprise-gateway.yaml
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
     - sleep 30
     - make itest-kubernetes
