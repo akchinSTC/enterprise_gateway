@@ -46,6 +46,7 @@ script:
     - cat etc/kubernetes/enterprise-gateway.yaml
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
     - sleep 30
+    - sudo kubectl get all --all-namespaces
     - make itest-kubernetes
 
 after_success:
