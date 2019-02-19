@@ -180,4 +180,4 @@ itest-docker-prep:
 ITEST_K8S_TESTS?=enterprise_gateway.itests.test_python_kernel.TestPythonKernelKubernetes
 itest-kubernetes: ## Run kubernetes integration tests
 	#@nosetests -v $(ITEST_K8S_TESTS)
-	($(SA) $(ENV) && GATEWAY_HOST=$(ITEST_YARN_HOST) KERNEL_USERNAME=$(ITEST_USER) ITEST_HOSTNAME_PREFIX=$(ITEST_HOSTNAME_PREFIX) nosetests -v $(ITEST_K8S_TESTS))
+	($(SA) $(ENV) && GATEWAY_HOST=$(IP_ADDR) KERNEL_USERNAME=$(ITEST_USER) ITEST_HOSTNAME_PREFIX=$(ITEST_HOSTNAME_PREFIX) nosetests -v $(ITEST_K8S_TESTS))
