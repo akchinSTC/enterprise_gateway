@@ -40,6 +40,7 @@ script:
     - hostname
     - ifconfig
     - env
+    - echo $(SSH_CONNECTION | cut -d' ' -f3)
 #    - sed -i 's/#  externalIPs:/  externalIPs:/g' etc/kubernetes/enterprise-gateway.yaml
 #    - sed -i 's/#  externalIPs:/  externalIPs:/g' etc/kubernetes/enterprise-gateway.yaml
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
