@@ -1,5 +1,6 @@
 import unittest
 import os
+from time import sleep
 from enterprise_gateway.client.gateway_client import GatewayClient
 
 
@@ -73,6 +74,7 @@ class TestPythonKernelKubernetes(unittest.TestCase, PythonKernelBaseTestCase):
         super(TestPythonKernelKubernetes, cls).setUpClass()
         print('>>>')
         print('Starting Python kernel using {} kernelspec'.format(cls.KERNELSPEC))
+        sleep(20)
 
         # initialize environment
         cls.gatewayClient = GatewayClient()
