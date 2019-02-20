@@ -134,7 +134,7 @@ ITEST_OPTIONS?=
 # ITEST_OPTIONS=--impersonation < True | False >
 
 ITEST_YARN_PORT?=8888
-ITEST_YARN_HOST?=localhost:$(ITEST_YARN_PORT)
+ITEST_YARN_HOST?=trusty64:$(ITEST_YARN_PORT)
 ITEST_YARN_TESTS?=enterprise_gateway.itests
 
 PREP_ITEST_YARN?=1
@@ -155,7 +155,7 @@ itest-yarn-prep:
 
 # This should get cleaned up once docker support is more mature
 ITEST_DOCKER_PORT?=8889
-ITEST_DOCKER_HOST?=trusty64:$(ITEST_DOCKER_PORT)
+ITEST_DOCKER_HOST?=localhost:$(ITEST_DOCKER_PORT)
 ITEST_DOCKER_TESTS?=enterprise_gateway.itests.test_r_kernel.TestRKernelLocal enterprise_gateway.itests.test_python_kernel.TestPythonKernelLocal enterprise_gateway.itests.test_scala_kernel.TestScalaKernelLocal
 ITEST_DOCKER_KERNELS=PYTHON_KERNEL_LOCAL_NAME=python_docker SCALA_KERNEL_LOCAL_NAME=scala_docker R_KERNEL_LOCAL_NAME=R_docker
 
