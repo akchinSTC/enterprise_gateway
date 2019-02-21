@@ -47,7 +47,7 @@ script:
     - sudo kubectl create -f etc/kubernetes/enterprise-gateway.yaml
     - sleep 60
     - sudo kubectl get all --all-namespaces
-    - telnet $IP_ADDR 8888
+#    - telnet $IP_ADDR 8888
     - netstat -nlp
     - cat /etc/hosts
     - make itest-kubernetes
