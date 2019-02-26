@@ -134,8 +134,9 @@ ITEST_OPTIONS?=
 # ITEST_OPTIONS=--impersonation < True | False >
 
 ITEST_YARN_PORT?=8888
+H_NAME?=$(echo $(hostname))
 #ITEST_YARN_HOST?=enthuse1.fyre.ibm.com:$(ITEST_YARN_PORT)
-ITEST_YARN_HOST?=$(hostname):$(ITEST_YARN_PORT)
+ITEST_YARN_HOST?=$(H_NAME):$(ITEST_YARN_PORT)
 ITEST_YARN_TESTS?=enterprise_gateway.itests
 
 PREP_ITEST_YARN?=1
