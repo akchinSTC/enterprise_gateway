@@ -126,7 +126,7 @@ itest: itest-docker itest-yarn
 ITEST_HOSTNAME_PREFIX?=itest
 
 # indicates the user to emulate.  This equates to 'KERNEL_USERNAME'...
-ITEST_USER?=bob
+ITEST_USER?=jovyan
 # indicates the other set of options to use.  At this time, only the python notebooks succeed, so we're skipping R and Scala.
 ITEST_OPTIONS?=
 
@@ -134,7 +134,7 @@ ITEST_OPTIONS?=
 # ITEST_OPTIONS=--impersonation < True | False >
 
 ITEST_YARN_PORT?=8888
-ITEST_YARN_HOST?=$(IP_ADDR):$(ITEST_YARN_PORT)
+ITEST_YARN_HOST?=enthuse1.fyre.ibm.com:$(ITEST_YARN_PORT)
 ITEST_YARN_TESTS?=enterprise_gateway.itests
 
 PREP_ITEST_YARN?=1
