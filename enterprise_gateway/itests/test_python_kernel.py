@@ -158,7 +158,7 @@ class TestPythonKernelKubernetes(unittest.TestCase, PythonKernelBaseKubernetesTe
         # initialize environment
         cls.gatewayClient = GatewayClient()
         cls.kernel = cls.gatewayClient.start_kernel(cls.KERNELSPEC)
-        sleep(60)
+        sleep(180)
 
     @classmethod
     def tearDownClass(cls):
