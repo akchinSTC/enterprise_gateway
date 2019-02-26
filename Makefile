@@ -135,7 +135,7 @@ ITEST_OPTIONS?=
 
 ITEST_YARN_PORT?=8888
 #ITEST_YARN_HOST?=enthuse1.fyre.ibm.com:$(ITEST_YARN_PORT)
-ITEST_YARN_HOST?=$(echo $(hostname)):$(ITEST_YARN_PORT)
+ITEST_YARN_HOST?=localhost:$(ITEST_YARN_PORT)
 ITEST_YARN_TESTS?=enterprise_gateway.itests
 
 PREP_ITEST_YARN?=1

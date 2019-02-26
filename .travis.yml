@@ -43,6 +43,7 @@ script:
     - ifconfig
     - env
     - export IP_ADDR=$(echo "$SSH_CONNECTION" | cut -d' ' -f3)
+    - export ITEST_YARN_HOST=$(echo $(hostname))
     - sed -i 's/#  externalIPs:/  externalIPs:/g' etc/kubernetes/enterprise-gateway.yaml
     - sed -i "s/#  - k8s-master-public-ip/  - $IP_ADDR/g" etc/kubernetes/enterprise-gateway.yaml
     - cat etc/kubernetes/enterprise-gateway.yaml
