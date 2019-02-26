@@ -15,6 +15,7 @@ env:
   global:
     - ASYNC_TEST_TIMEOUT=30
     - MINICONDA_VERSION=4.5.11
+    - MINIKUBE_VERSION=0.23.1
     - CONDA_DIR=/opt/conda
     - PATH=$CONDA_DIR/bin:$PATH
 
@@ -23,7 +24,7 @@ before_install:
     - curl -L -o $HOME/.sbt/launchers/1.2.1/sbt-launch.jar http://central.maven.org/maven2/org/scala-sbt/sbt-launch/1.2.1/sbt-launch-1.2.1.jar
     - wget --quiet https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh
     - curl -s -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.9.4/bin/linux/amd64/kubectl
-    - curl -s -Lo minikube https://storage.googleapis.com/minikube/releases/v0.34.1/minikube-linux-amd64
+    - curl -s -Lo minikube https://storage.googleapis.com/minikube/releases/v${MINIKUBE_VERSION}/minikube-linux-amd64
 
 install:
     - /bin/bash Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA_DIR
